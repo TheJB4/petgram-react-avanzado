@@ -5,7 +5,9 @@ function App() {
 
   return (
     <>
-      hola mundillo
+      useEffect(() => {
+        fetch('http://localhost:3500/graphql/categories').then(res => res.json()).then(data=> console.log(data))
+      }, []);
     </>
   )
 }

@@ -3,6 +3,9 @@ const cors = require('cors')
 const { ApolloServer } = require('apollo-server-express')
 const { resolvers, typeDefs } = require('./schema')
 const jwt = require('express-jwt')
+const serverless = require('serverless-http');
+const bodyParser = require('body-parser');
+
 
 // this is not secure! this is for dev purposes
 process.env.JWT_SECRET = process.env.JWT_SECRET || 'somereallylongsecretkey'
@@ -12,6 +15,7 @@ const app = express()
 const { categories } = require('./db.json')
 
 app.use(cors())
+app.use(bodyParser)
 
 // auth middleware
 const auth = jwt({
@@ -54,4 +58,4 @@ if (!process.env.NOW_REGION) {
   })
 }
 
-module.exports = app
+module.exports = serverless(app)
